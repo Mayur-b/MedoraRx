@@ -72,14 +72,14 @@ The result: a **human-reviewable, medically validated Hindi translation** — no
   └────────┬────────┘
            │
            ▼
-  ┌──────────────────────────────────────────────────────┐
+  ┌───────────────────────────────────────────────────────┐
   │                  React Frontend                       │
-  │  ┌─────────────┬──────────────┬────────────────────┐ │
-  │  │  Original   │   Hindi      │   Review Panel     │ │
-  │  │  English    │ Translation  │  ⚠️ Flagged Terms  │ │
-  │  │             │              │  ✅ Verified Terms  │ │
-  │  └─────────────┴──────────────┴────────────────────┘ │
-  └──────────────────────────────────────────────────────┘
+  │  ┌─────────────┬──────────────┬────────────────────┐  │
+  │  │  Original   │   Hindi      │   Review Panel     │  │
+  │  │  English    │ Translation  │  ⚠️ Flagged Terms  │  │
+  │  │             │              │  ✅ Verified Terms │  │
+  │  └─────────────┴──────────────┴────────────────────┘  │
+  └───────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -250,18 +250,6 @@ MedoraRx/
 
 ---
 
-## 📊 Judging Criteria Coverage
-
-| Criterion | Weight | How MedoraRx addresses it |
-|---|---|---|
-| Accuracy & Relevance | 25% | Meets Reasoning Agents track; Foundry IQ is core, not decorative |
-| Reasoning & Multi-step | 25% | 4-agent pipeline with distinct reasoning at each step; visible reasoning trace in UI |
-| Reliability & Safety | 20% | Human-in-the-loop review; confidence scores; medical term flagging |
-| Creativity & Originality | 15% | Real unmet need; 600M speaker market; nonprofit origin story |
-| UX & Presentation | 15% | Clean 3-panel viewer; clear flagging UI; polished demo video |
-
----
-
 ## 🌱 Real-World Impact
 
 MedoraRx was inspired by an active nonprofit initiative translating medical literacy books for underserved communities in India. The demo uses WHO's publicly licensed Malaria Guidelines (CC BY-NC-SA 3.0 IGO). The pipeline is language-agnostic and can be extended to any target language supported by Azure Translator.
@@ -279,11 +267,3 @@ MedoraRx was inspired by an active nonprofit initiative translating medical lite
 MIT License — see [LICENSE](LICENSE) for details.
 
 Demo data: WHO Guidelines for Malaria © World Health Organization, licensed under CC BY-NC-SA 3.0 IGO.
-
----
-
-## 🏆 Hackathon
-
-Built for **Microsoft Agents League — AI Skills Fest 2026**
-Track: 🧠 Reasoning Agents | IQ Layer: Foundry IQ
-Submission deadline: June 14, 2026
