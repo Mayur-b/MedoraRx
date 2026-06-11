@@ -88,13 +88,17 @@ export default function App() {
           >
             {isLoading ? "Processing…" : "Translate & Review"}
           </button>
-
-          {error && (
-            <div className="mt-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
-              <span className="font-semibold">Error:</span> {error}
-            </div>
-          )}
         </section>
+
+        {/* ───────── Error banner (below the upload card) ───────── */}
+        {error && (
+          <div
+            role="alert"
+            className="mx-auto mb-8 max-w-2xl rounded-xl border border-red-300 bg-red-50 p-4 text-sm text-red-700 shadow-sm"
+          >
+            <span className="font-semibold">Error:</span> {error}
+          </div>
+        )}
 
         {/* ───────── Loading: pipeline progress ───────── */}
         {isLoading && (
