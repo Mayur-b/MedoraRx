@@ -12,9 +12,11 @@ body {
   color: #1e293b;
 }
 
-/* Devanagari script gets a dedicated face + extra size for readability */
+/* Devanagari script gets a dedicated face + extra size for readability.
+   Falls back to bundled OS Devanagari fonts (Mangal on Windows, Arial Unicode
+   MS) so the app still renders Hindi if the Google Fonts CDN is unavailable. */
 .font-hindi {
-  font-family: "Noto Sans Devanagari", system-ui, sans-serif;
+  font-family: "Noto Sans Devanagari", "Mangal", "Arial Unicode MS", sans-serif;
   line-height: 1.9;
 }
 

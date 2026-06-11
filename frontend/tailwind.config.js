@@ -16,7 +16,12 @@ export default {
         },
       },
       fontFamily: {
-        hindi: ['"Noto Sans Devanagari"', "system-ui", "sans-serif"],
+        hindi: [
+          '"Noto Sans Devanagari"',
+          '"Mangal"',
+          '"Arial Unicode MS"',
+          "sans-serif",
+        ],
       },
     },
   },
