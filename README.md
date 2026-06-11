@@ -84,6 +84,14 @@ The result: a **human-reviewable, medically validated Hindi translation** — no
 
 ---
 
+## 📸 Screenshots
+
+![Upload Screen](docs/screenshots/screenshot-upload.png)
+![Translation Results](docs/screenshots/screenshot-results.png)
+![Reasoning Trace Tooltip](docs/screenshots/screenshot-tooltip.png)
+
+---
+
 ## 🔑 Microsoft IQ Integration
 
 MedoraRx uses **Foundry IQ** as its core intelligence layer:
@@ -194,14 +202,40 @@ uvicorn main:app --reload
 ```bash
 cd frontend
 npm install
-npm start
+npm run dev
 ```
+
+---
+
+## ⚡ Quick Start
+
+1. Clone the repo
+2. Copy `backend/.env.example` to `backend/.env` and fill in Azure credentials
+3. `pip install -r backend/requirements.txt`
+4. `uvicorn backend.main:app --reload --port 8000`
+5. `cd frontend && npm install && npm run dev`
+6. Open http://localhost:5173 and upload a medical PDF
+
+---
 
 ### Upload Knowledge Base
 ```bash
 cd backend
 python foundry_iq/setup_knowledge_base.py
 ```
+
+---
+
+## 🔄 How It Works
+
+1. Upload any medical PDF
+2. Agent 1 extracts and structures the text
+3. Agent 2 translates to Hindi via Azure Translator
+4. Agent 3 validates every medical term against Foundry IQ knowledge base
+5. Agent 4 builds a confidence-scored review report
+6. Review the results in the 3-panel viewer
+
+An **Orchestrator** (FastAPI backend) manages all 4 agents in sequence, passing structured output from one agent as input to the next, ensuring data consistency and error handling throughout the pipeline.
 
 ---
 
@@ -242,11 +276,17 @@ MedoraRx/
 
 ## 🎯 Demo
 
-> Demo video: [Link to be added before submission]
+> Demo video: Coming soon
 
 **Demo input:** WHO Guidelines for Malaria (August 2025, 478 pages)
-**Demo scope:** Chapter 1 processed end-to-end
-**Demo output:** Side-by-side Hindi translation with 47 flagged medical terms
+
+**Demo output:**
+- Pages processed: 10 of 478
+- Sections found: 12
+- Terms reviewed: 83
+- Verified: 82
+- Ambiguous: 1 (Bioavailability)
+- Overall confidence: 98/100
 
 ---
 
