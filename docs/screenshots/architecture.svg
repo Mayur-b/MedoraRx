@@ -1,0 +1,131 @@
+<svg viewBox="0 0 900 620" xmlns="http://www.w3.org/2000/svg" font-family="Inter, Segoe UI, sans-serif">
+
+  <!-- Background -->
+  <rect width="900" height="620" fill="#f8fafc" rx="12"/>
+
+  <!-- Title -->
+  <text x="450" y="38" text-anchor="middle" font-size="20" font-weight="700" fill="#1e3a5f">MedoraRx — Agentic Medical Translation Pipeline</text>
+  <text x="450" y="58" text-anchor="middle" font-size="12" fill="#64748b">Azure AI Foundry · Foundry IQ · Azure Translator · GPT-4o</text>
+
+  <!-- ─── INPUT ─── -->
+  <rect x="30" y="90" width="140" height="64" rx="10" fill="#1e3a5f"/>
+  <text x="100" y="116" text-anchor="middle" font-size="13" font-weight="600" fill="white">📄 PDF Input</text>
+  <text x="100" y="133" text-anchor="middle" font-size="11" fill="#93c5fd">WHO Malaria Guidelines</text>
+  <text x="100" y="148" text-anchor="middle" font-size="10" fill="#93c5fd">478 pages</text>
+
+  <!-- Arrow INPUT → A1 -->
+  <line x1="170" y1="122" x2="210" y2="122" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ─── AGENT 1 ─── -->
+  <rect x="210" y="90" width="140" height="64" rx="10" fill="#0f766e"/>
+  <text x="280" y="112" text-anchor="middle" font-size="11" font-weight="600" fill="white">Agent 1</text>
+  <text x="280" y="128" text-anchor="middle" font-size="13" font-weight="700" fill="white">PDF Parser</text>
+  <text x="280" y="145" text-anchor="middle" font-size="10" fill="#99f6e4">pypdf2 · entity tagging</text>
+
+  <!-- Arrow A1 → A2 -->
+  <line x1="350" y1="122" x2="390" y2="122" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ─── AGENT 2 ─── -->
+  <rect x="390" y="90" width="140" height="64" rx="10" fill="#1d4ed8"/>
+  <text x="460" y="112" text-anchor="middle" font-size="11" font-weight="600" fill="white">Agent 2</text>
+  <text x="460" y="128" text-anchor="middle" font-size="13" font-weight="700" fill="white">Translator</text>
+  <text x="460" y="145" text-anchor="middle" font-size="10" fill="#bfdbfe">Azure Translator EN→HI</text>
+
+  <!-- Arrow A2 → A3 -->
+  <line x1="530" y1="122" x2="570" y2="122" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ─── AGENT 3 ─── -->
+  <rect x="570" y="90" width="140" height="64" rx="10" fill="#7c3aed"/>
+  <text x="640" y="112" text-anchor="middle" font-size="11" font-weight="600" fill="white">Agent 3</text>
+  <text x="640" y="128" text-anchor="middle" font-size="13" font-weight="700" fill="white">Medical Reviewer</text>
+  <text x="640" y="145" text-anchor="middle" font-size="10" fill="#ddd6fe">Foundry IQ queries</text>
+
+  <!-- Arrow A3 → A4 -->
+  <line x1="710" y1="122" x2="750" y2="122" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ─── AGENT 4 ─── -->
+  <rect x="750" y="90" width="120" height="64" rx="10" fill="#b45309"/>
+  <text x="810" y="112" text-anchor="middle" font-size="11" font-weight="600" fill="white">Agent 4</text>
+  <text x="810" y="128" text-anchor="middle" font-size="13" font-weight="700" fill="white">Report Builder</text>
+  <text x="810" y="145" text-anchor="middle" font-size="10" fill="#fde68a">confidence scoring</text>
+
+  <!-- ─── FOUNDRY IQ BOX ─── -->
+  <rect x="490" y="200" width="280" height="110" rx="10" fill="white" stroke="#7c3aed" stroke-width="2" stroke-dasharray="6,3"/>
+  <text x="630" y="222" text-anchor="middle" font-size="12" font-weight="700" fill="#7c3aed">🧠 Foundry IQ Knowledge Base</text>
+  <text x="630" y="242" text-anchor="middle" font-size="11" fill="#475569">medorarx-kb · medorarx-search (West US 2)</text>
+  <rect x="510" y="252" width="110" height="44" rx="6" fill="#f3e8ff"/>
+  <text x="565" y="270" text-anchor="middle" font-size="10" font-weight="600" fill="#7c3aed">medical-terminology</text>
+  <text x="565" y="285" text-anchor="middle" font-size="10" fill="#6b7280">200 EN→HI terms</text>
+  <rect x="640" y="252" width="110" height="44" rx="6" fill="#f3e8ff"/>
+  <text x="695" y="270" text-anchor="middle" font-size="10" font-weight="600" fill="#7c3aed">376 synonym keys</text>
+  <text x="695" y="285" text-anchor="middle" font-size="10" fill="#6b7280">drug names · dosages</text>
+
+  <!-- Arrow A3 ↔ Foundry IQ -->
+  <line x1="640" y1="154" x2="640" y2="200" stroke="#7c3aed" stroke-width="2" stroke-dasharray="4,2" marker-end="url(#arrowPurple)"/>
+
+  <!-- ─── AZURE SERVICES BOX ─── -->
+  <rect x="30" y="200" width="420" height="110" rx="10" fill="white" stroke="#1d4ed8" stroke-width="2" stroke-dasharray="6,3"/>
+  <text x="240" y="222" text-anchor="middle" font-size="12" font-weight="700" fill="#1d4ed8">☁️ Azure AI Foundry — medoraRx-foundry (East US)</text>
+  <rect x="50" y="232" width="115" height="64" rx="6" fill="#eff6ff"/>
+  <text x="107" y="252" text-anchor="middle" font-size="10" font-weight="600" fill="#1d4ed8">GPT-4o</text>
+  <text x="107" y="266" text-anchor="middle" font-size="10" fill="#6b7280">2024-11-20</text>
+  <text x="107" y="280" text-anchor="middle" font-size="10" fill="#6b7280">Global Standard</text>
+  <rect x="185" y="232" width="115" height="64" rx="6" fill="#eff6ff"/>
+  <text x="242" y="252" text-anchor="middle" font-size="10" font-weight="600" fill="#1d4ed8">Azure Translator</text>
+  <text x="242" y="266" text-anchor="middle" font-size="10" fill="#6b7280">EN → HI</text>
+  <text x="242" y="280" text-anchor="middle" font-size="10" fill="#6b7280">Free F0 tier</text>
+  <rect x="320" y="232" width="115" height="64" rx="6" fill="#eff6ff"/>
+  <text x="377" y="252" text-anchor="middle" font-size="10" font-weight="600" fill="#1d4ed8">AI Services</text>
+  <text x="377" y="266" text-anchor="middle" font-size="10" fill="#6b7280">Language + NER</text>
+  <text x="377" y="280" text-anchor="middle" font-size="10" fill="#6b7280">entity tagging</text>
+
+  <!-- ─── FASTAPI ─── -->
+  <rect x="330" y="350" width="240" height="60" rx="10" fill="#0f766e"/>
+  <text x="450" y="374" text-anchor="middle" font-size="12" font-weight="700" fill="white">⚡ FastAPI Orchestrator</text>
+  <text x="450" y="392" text-anchor="middle" font-size="10" fill="#99f6e4">POST /translate · GET /report · GET /health</text>
+
+  <!-- Arrow pipeline → FastAPI -->
+  <line x1="450" y1="154" x2="450" y2="350" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,2"/>
+
+  <!-- ─── REACT FRONTEND ─── -->
+  <rect x="100" y="460" width="700" height="130" rx="10" fill="white" stroke="#1e3a5f" stroke-width="2"/>
+  <text x="450" y="484" text-anchor="middle" font-size="13" font-weight="700" fill="#1e3a5f">⚛️ React + TypeScript Frontend (Vite · Tailwind)</text>
+
+  <!-- Panel 1 -->
+  <rect x="120" y="494" width="195" height="82" rx="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="217" y="514" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">Panel 1 — Original English</text>
+  <text x="217" y="530" text-anchor="middle" font-size="10" fill="#475569">Section-by-section text</text>
+  <text x="217" y="545" text-anchor="middle" font-size="10" fill="#475569">Highlighted medical terms</text>
+  <text x="217" y="560" text-anchor="middle" font-size="10" fill="#475569">Synced scroll</text>
+
+  <!-- Panel 2 -->
+  <rect x="332" y="494" width="195" height="82" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="429" y="514" text-anchor="middle" font-size="11" font-weight="600" fill="#2563eb">Panel 2 — हिन्दी Translation</text>
+  <text x="429" y="530" text-anchor="middle" font-size="10" fill="#475569">Noto Sans Devanagari font</text>
+  <text x="429" y="545" text-anchor="middle" font-size="10" fill="#475569">Hindi term highlights</text>
+  <text x="429" y="560" text-anchor="middle" font-size="10" fill="#475569">EN→HI tooltips</text>
+
+  <!-- Panel 3 -->
+  <rect x="544" y="494" width="236" height="82" rx="6" fill="#faf5ff" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="662" y="514" text-anchor="middle" font-size="11" font-weight="600" fill="#7c3aed">Panel 3 — Foundry IQ Review</text>
+  <text x="662" y="530" text-anchor="middle" font-size="10" fill="#475569">Confidence ring (98/100)</text>
+  <text x="662" y="545" text-anchor="middle" font-size="10" fill="#475569">Verified / Ambiguous / Flagged</text>
+  <text x="662" y="560" text-anchor="middle" font-size="10" fill="#475569">Click-to-scroll reasoning trace</text>
+
+  <!-- Arrow FastAPI → Frontend -->
+  <line x1="450" y1="410" x2="450" y2="460" stroke="#0f766e" stroke-width="2" marker-end="url(#arrowGreen)"/>
+
+  <!-- ─── ARROW MARKERS ─── -->
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#94a3b8"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#7c3aed"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#0f766e"/>
+    </marker>
+  </defs>
+
+</svg>
