@@ -35,6 +35,8 @@ The result: a **human-reviewable, medically validated Hindi translation** — no
 
 ## 🏗️ Architecture
 
+![MedoraRx Architecture](docs/screenshots/architecture.svg)
+
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                         MedoraRx Pipeline                       │
