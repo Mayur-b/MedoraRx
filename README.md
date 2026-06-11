@@ -37,53 +37,6 @@ The result: a **human-reviewable, medically validated Hindi translation** — no
 
 ![MedoraRx Architecture](docs/screenshots/architecture.svg)
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                         MedoraRx Pipeline                       │
-└─────────────────────────────────────────────────────────────────┘
-
-  📄 PDF Input (WHO Medical Guidelines)
-        │
-        ▼
-  ┌─────────────────┐
-  │  Agent 1        │  • Extracts text preserving structure
-  │  PDF Parser     │  • Tags headings, paragraphs, sections
-  │                 │  • Identifies medical entity candidates
-  └────────┬────────┘
-           │
-           ▼
-  ┌─────────────────┐
-  │  Agent 2        │  • Azure Translator (English → Hindi)
-  │  Translator     │  • Preserves document structure
-  │                 │  • Handles medical terminology context
-  └────────┬────────┘
-           │
-           ▼
-  ┌─────────────────┐      ┌──────────────────────────────┐
-  │  Agent 3        │◄────►│  Foundry IQ Knowledge Base   │
-  │  Medical        │      │  • 200+ medical terms        │
-  │  Reviewer       │      │  • Hindi equivalents         │
-  │                 │      │  • Drug names & dosages      │
-  └────────┬────────┘      │  • Confidence scores         │
-           │               └──────────────────────────────┘
-           ▼
-  ┌─────────────────┐
-  │  Agent 4        │  • Assembles final review JSON
-  │  Report Builder │  • Confidence score per paragraph
-  │                 │  • Flags sections for human review
-  └────────┬────────┘
-           │
-           ▼
-  ┌───────────────────────────────────────────────────────┐
-  │                  React Frontend                       │
-  │  ┌─────────────┬──────────────┬────────────────────┐  │
-  │  │  Original   │   Hindi      │   Review Panel     │  │
-  │  │  English    │ Translation  │  ⚠️ Flagged Terms  │  │
-  │  │             │              │  ✅ Verified Terms │  │
-  │  └─────────────┴──────────────┴────────────────────┘  │
-  └───────────────────────────────────────────────────────┘
-```
-
 ---
 
 ## 📸 Screenshots
@@ -175,40 +128,6 @@ This is not a superficial integration — Foundry IQ is the reason MedoraRx prod
 - Azure AI Foundry project with GPT-4o deployed
 - Foundry IQ knowledge base configured
 
-### Backend Setup
-
-```bash
-# Clone the repository
-git clone https://github.com/Mayur-b/MedoraRx.git
-cd MedoraRx
-
-# Create virtual environment
-python -m venv venv
-venv\Scripts\activate  # Windows
-source venv/bin/activate  # Mac/Linux
-
-# Install dependencies
-pip install -r backend/requirements.txt
-
-# Configure environment
-cp backend/.env.example backend/.env
-# Edit backend/.env with your Azure credentials
-
-# Start the backend
-cd backend
-uvicorn main:app --reload
-```
-
-### Frontend Setup
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
----
-
 ## ⚡ Quick Start
 
 1. Clone the repo
@@ -217,14 +136,6 @@ npm run dev
 4. `uvicorn backend.main:app --reload --port 8000`
 5. `cd frontend && npm install && npm run dev`
 6. Open http://localhost:5173 and upload a medical PDF
-
----
-
-### Upload Knowledge Base
-```bash
-cd backend
-python foundry_iq/setup_knowledge_base.py
-```
 
 ---
 
@@ -297,9 +208,10 @@ MedoraRx/
 MedoraRx was inspired by an active nonprofit initiative translating medical literacy books for underserved communities in India. The demo uses WHO's publicly licensed Malaria Guidelines (CC BY-NC-SA 3.0 IGO). The pipeline is language-agnostic and can be extended to any target language supported by Azure Translator.
 
 **Potential reach:**
-- 600M+ Hindi speakers
-- 500M+ Bengali speakers
-- 250M+ Marathi and Telugu speakers
+- 616M+ Hindi speakers
+- 242M+ Bengali speakers
+- 104M+ Telugu speakers
+- 99M+ Marathi speakers
 - Any language in Azure Translator's 100+ supported languages
 
 ---
