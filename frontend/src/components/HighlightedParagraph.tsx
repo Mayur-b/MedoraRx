@@ -197,6 +197,14 @@ function TermMark({ term, children }: { term: ReviewedTerm; children: ReactNode 
         <span className="block rounded-md bg-slate-800 px-2.5 py-1.5 text-left shadow-lg">
           <span className="block text-[11px] font-semibold text-white">
             {term.term_english}
+            {(term.term_hindi_verified ?? term.term_hindi_translated) && (
+              <>
+                {" → "}
+                <span className="font-hindi">
+                  {term.term_hindi_verified ?? term.term_hindi_translated}
+                </span>
+              </>
+            )}
           </span>
           <span className="mt-0.5 block text-[10px] text-slate-300">
             Category: <span className="text-slate-100">{term.category}</span>
