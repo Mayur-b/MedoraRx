@@ -7,3 +7,6 @@ node_modules/
 *.log
 dist/
 build/
+
+# Generated pipeline output (reports + uploaded PDFs)
+data/output/
