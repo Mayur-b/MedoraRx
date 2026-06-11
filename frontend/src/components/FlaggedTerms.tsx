@@ -6,9 +6,15 @@ interface FlaggedTermsProps {
   // Optional map from term_english -> verified Hindi, so we can show the
   // KB-verified Devanagari form alongside the English term.
   verifiedHindi?: Record<string, string | null>;
+  // Called with the first paragraph a term appears in, to scroll the panels.
+  onTermClick?: (paragraphId: string) => void;
 }
 
-export default function FlaggedTerms({ terms, verifiedHindi = {} }: FlaggedTermsProps) {
+export default function FlaggedTerms({
+  terms,
+  verifiedHindi = {},
+  onTermClick,
+}: FlaggedTermsProps) {
   if (terms.length === 0) {
     return (
       <div className="rounded-lg border border-green-200 bg-green-50 p-4 text-center">
@@ -24,10 +30,32 @@ export default function FlaggedTerms({ terms, verifiedHindi = {} }: FlaggedTerms
       {terms.map((t) => {
         const style = STATUS_STYLES[t.status];
         const hindi = verifiedHindi[t.term];
+        const target = t.appears_in_paragraphs[0];
+        const clickable = Boolean(onTermClick && target);
+        const handleClick = () => {
+          if (clickable) onTermClick!(target);
+        };
         return (
           <li
             key={t.term}
-            className={`rounded-lg border ${style.border} ${style.bg} p-3.5 shadow-sm`}
+            onClick={handleClick}
+            onKeyDown={(e) => {
+              if (clickable && (e.key === "Enter" || e.key === " ")) {
+                e.preventDefault();
+                handleClick();
+              }
+            }}
+            role={clickable ? "button" : undefined}
+            tabIndex={clickable ? 0 : undefined}
+            title={clickable ? `Jump to paragraph ${target}` : undefined}
+            className={[
+              "rounded-lg border p-3.5 shadow-sm",
+              style.border,
+              style.bg,
+              clickable
+                ? "cursor-pointer transition hover:shadow-md hover:ring-2 hover:ring-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                : "",
+            ].join(" ")}
           >
             {/* Header row: warning icon + EN → HI */}
             <div className="flex items-start justify-between gap-2">

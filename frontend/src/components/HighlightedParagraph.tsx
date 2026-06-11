@@ -7,6 +7,9 @@ interface HighlightedParagraphProps {
   reviewedTerms: ReviewedTerm[];
   lang: "en" | "hi";
   className?: string;
+  id?: string;
+  /** Briefly flash a blue border/background (used by click-to-scroll). */
+  flash?: boolean;
 }
 
 // Inline highlight colours per status.
@@ -126,8 +129,19 @@ export default function HighlightedParagraph({
   reviewedTerms,
   lang,
   className,
+  id,
+  flash = false,
 }: HighlightedParagraphProps) {
-  return <p className={className}>{buildNodes(text, reviewedTerms, lang)}</p>;
+  // border-l stays reserved (transparent) so the flash adds no layout shift.
+  const flashClass = flash ? "border-blue-400 bg-blue-50" : "border-transparent";
+  return (
+    <p
+      id={id}
+      className={`${className ?? ""} scroll-mt-2 rounded border-l-4 pl-2 transition-colors duration-700 ${flashClass}`}
+    >
+      {buildNodes(text, reviewedTerms, lang)}
+    </p>
+  );
 }
 
 /* ─────────────────── highlighted term + hover tooltip ─────────────────── */

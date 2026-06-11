@@ -1,4 +1,4 @@
-import { useMemo, useRef, type RefObject } from "react";
+import { useMemo, useRef, useState, type RefObject } from "react";
 import type { PipelineReport } from "../types";
 import { confidenceColor, confidenceRing } from "../statusStyles";
 import FlaggedTerms from "./FlaggedTerms";
@@ -16,9 +16,15 @@ export default function TranslationViewer({ report }: TranslationViewerProps) {
   const enScrollRef = useRef<HTMLDivElement>(null);
   const hiScrollRef = useRef<HTMLDivElement>(null);
   const isSyncing = useRef(false);
+  // Disables ratio-syncing while we programmatically scroll both panels at once.
+  const suppressSync = useRef(false);
+
+  // Paragraph briefly flashed after a click-to-scroll jump.
+  const [flashParaId, setFlashParaId] = useState<string | null>(null);
 
   const syncScroll =
     (source: RefObject<HTMLDivElement>, target: RefObject<HTMLDivElement>) => () => {
+      if (suppressSync.current) return; // both panels are being driven directly
       if (isSyncing.current) return; // ignore the echo from the programmatic scroll
       const src = source.current;
       const tgt = target.current;
@@ -33,6 +39,36 @@ export default function TranslationViewer({ report }: TranslationViewerProps) {
         isSyncing.current = false;
       });
     };
+
+  // Scroll both panels to the paragraph with the given id and flash it.
+  function scrollToParagraph(paragraphId: string) {
+    if (!paragraphId) return;
+    suppressSync.current = true;
+
+    const panels: [HTMLDivElement | null, string][] = [
+      [enScrollRef.current, "en"],
+      [hiScrollRef.current, "hi"],
+    ];
+    for (const [container, prefix] of panels) {
+      if (!container) continue;
+      const el = document.getElementById(`${prefix}-paragraph-${paragraphId}`);
+      if (!el) continue;
+      // getBoundingClientRect diff is robust regardless of offsetParent.
+      const cRect = container.getBoundingClientRect();
+      const eRect = el.getBoundingClientRect();
+      const top = container.scrollTop + (eRect.top - cRect.top) - 12;
+      container.scrollTo({ top, behavior: "smooth" });
+    }
+
+    // Re-enable sync once the smooth scroll has settled.
+    window.setTimeout(() => {
+      suppressSync.current = false;
+    }, 700);
+
+    // Flash the target paragraph in both panels for ~2s.
+    setFlashParaId(paragraphId);
+    window.setTimeout(() => setFlashParaId(null), 2000);
+  }
 
   // Build term_english -> verified Hindi map from every reviewed term in the doc.
   const verifiedHindi = useMemo(() => {
@@ -66,6 +102,8 @@ export default function TranslationViewer({ report }: TranslationViewerProps) {
               {section.paragraphs.map((para) => (
                 <HighlightedParagraph
                   key={para.paragraph_id}
+                  id={`en-paragraph-${para.paragraph_id}`}
+                  flash={flashParaId === para.paragraph_id}
                   text={para.text}
                   reviewedTerms={para.reviewed_terms}
                   lang="en"
@@ -92,6 +130,8 @@ export default function TranslationViewer({ report }: TranslationViewerProps) {
               {section.paragraphs.map((para) => (
                 <HighlightedParagraph
                   key={para.paragraph_id}
+                  id={`hi-paragraph-${para.paragraph_id}`}
+                  flash={flashParaId === para.paragraph_id}
                   text={para.text_hindi ?? "—"}
                   reviewedTerms={para.reviewed_terms}
                   lang="hi"
@@ -140,7 +180,11 @@ export default function TranslationViewer({ report }: TranslationViewerProps) {
             <p className="mb-2 text-sm font-semibold text-slate-600">
               Reasoning trace
             </p>
-            <FlaggedTerms terms={fr.flagged_terms} verifiedHindi={verifiedHindi} />
+            <FlaggedTerms
+              terms={fr.flagged_terms}
+              verifiedHindi={verifiedHindi}
+              onTermClick={scrollToParagraph}
+            />
           </div>
         </div>
       </Panel>
