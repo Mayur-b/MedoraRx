@@ -1,7 +1,8 @@
-import { useMemo } from "react";
+import { useMemo, useRef, type RefObject } from "react";
 import type { PipelineReport } from "../types";
 import { confidenceColor, confidenceRing } from "../statusStyles";
 import FlaggedTerms from "./FlaggedTerms";
+import HighlightedParagraph from "./HighlightedParagraph";
 
 interface TranslationViewerProps {
   report: PipelineReport;
@@ -10,6 +11,28 @@ interface TranslationViewerProps {
 export default function TranslationViewer({ report }: TranslationViewerProps) {
   const { sections, final_report: fr } = report;
   const ts = fr.terms_summary;
+
+  // Synced scrolling between the English (Panel 1) and Hindi (Panel 2) panels.
+  const enScrollRef = useRef<HTMLDivElement>(null);
+  const hiScrollRef = useRef<HTMLDivElement>(null);
+  const isSyncing = useRef(false);
+
+  const syncScroll =
+    (source: RefObject<HTMLDivElement>, target: RefObject<HTMLDivElement>) => () => {
+      if (isSyncing.current) return; // ignore the echo from the programmatic scroll
+      const src = source.current;
+      const tgt = target.current;
+      if (!src || !tgt) return;
+      isSyncing.current = true;
+      // Match by scroll ratio — the two panels have different content heights
+      // (Hindi uses a larger font), so absolute scrollTop would drift apart.
+      const maxSrc = src.scrollHeight - src.clientHeight;
+      const ratio = maxSrc > 0 ? src.scrollTop / maxSrc : 0;
+      tgt.scrollTop = ratio * (tgt.scrollHeight - tgt.clientHeight);
+      requestAnimationFrame(() => {
+        isSyncing.current = false;
+      });
+    };
 
   // Build term_english -> verified Hindi map from every reviewed term in the doc.
   const verifiedHindi = useMemo(() => {
@@ -30,16 +53,24 @@ export default function TranslationViewer({ report }: TranslationViewerProps) {
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
       {/* ───────── Panel 1: English ───────── */}
       <Panel title="Original (English)" accent="bg-slate-700">
-        <div className="panel-scroll max-h-[70vh] space-y-5 overflow-y-auto pr-2">
+        <div
+          ref={enScrollRef}
+          onScroll={syncScroll(enScrollRef, hiScrollRef)}
+          className="panel-scroll max-h-[70vh] space-y-5 overflow-y-auto pr-2"
+        >
           {sections.map((section) => (
             <div key={section.section_id}>
               <h3 className="mb-1.5 text-sm font-bold uppercase tracking-wide text-slate-500">
                 {section.heading}
               </h3>
               {section.paragraphs.map((para) => (
-                <p key={para.paragraph_id} className="mb-3 text-sm leading-relaxed text-slate-700">
-                  {para.text}
-                </p>
+                <HighlightedParagraph
+                  key={para.paragraph_id}
+                  text={para.text}
+                  reviewedTerms={para.reviewed_terms}
+                  lang="en"
+                  className="mb-3 text-sm leading-relaxed text-slate-700"
+                />
               ))}
             </div>
           ))}
@@ -48,19 +79,24 @@ export default function TranslationViewer({ report }: TranslationViewerProps) {
 
       {/* ───────── Panel 2: Hindi ───────── */}
       <Panel title="Translation (हिन्दी)" accent="bg-medora-accent">
-        <div className="panel-scroll max-h-[70vh] space-y-5 overflow-y-auto pr-2">
+        <div
+          ref={hiScrollRef}
+          onScroll={syncScroll(hiScrollRef, enScrollRef)}
+          className="panel-scroll max-h-[70vh] space-y-5 overflow-y-auto pr-2"
+        >
           {sections.map((section) => (
             <div key={section.section_id}>
               <h3 className="mb-1.5 text-sm font-bold uppercase tracking-wide text-slate-500">
                 {section.heading}
               </h3>
               {section.paragraphs.map((para) => (
-                <p
+                <HighlightedParagraph
                   key={para.paragraph_id}
+                  text={para.text_hindi ?? "—"}
+                  reviewedTerms={para.reviewed_terms}
+                  lang="hi"
                   className="font-hindi mb-3 text-[1.05rem] text-slate-800"
-                >
-                  {para.text_hindi ?? "—"}
-                </p>
+                />
               ))}
             </div>
           ))}

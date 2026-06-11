@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import PDFUploader from "./components/PDFUploader";
 import TranslationViewer from "./components/TranslationViewer";
 import { translatePdf } from "./api";
+import { displayTitle } from "./utils";
 import type { PipelineReport } from "./types";
 
 const PIPELINE_STEPS = [
@@ -137,7 +138,7 @@ export default function App() {
           <section>
             <div className="mb-4 flex flex-wrap items-baseline justify-between gap-2">
               <h2 className="text-lg font-semibold text-slate-800">
-                {report.final_report.document_title || "Review Report"}
+                {displayTitle(report.final_report.document_title)}
               </h2>
               <p className="text-sm text-slate-500">
                 {report.final_report.total_sections} sections ·{" "}
