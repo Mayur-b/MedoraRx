@@ -31,6 +31,7 @@ MedoraRx is an **agentic AI pipeline** built on **Microsoft Azure AI Foundry** t
 
 The result: a **human-reviewable, medically validated Hindi translation** — not just a raw machine translation.
 
+[Jump to Demo](#-demo)
 ---
 
 ## 🏗️ Architecture
@@ -189,7 +190,7 @@ MedoraRx/
 
 ## 🎯 Demo
 
-> Demo video: Coming soon
+> Demo video: [MedoraRx — AI Agent Translates Medical Documents to Hindi | Azure AI Foundry](https://youtu.be/i5PuOqbaD_0)
 
 **Demo input:** WHO Guidelines for Malaria (August 2025, 478 pages)
 
